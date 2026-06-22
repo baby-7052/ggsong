@@ -117,7 +117,7 @@ BOT_TOKEN = getenv("BOT_TOKEN")
 
 MONGO_DB_URI = getenv("MONGO_DB_URI")
 
-OWNER_ID = int(getenv("OWNER_ID") or "7187147313")
+OWNER_ID = int(getenv("OWNER_ID") or "123456789")
 
 LOGGER_ID = getenv("LOGGER_ID", None)
 LOGGER_ID = int(LOGGER_ID) if LOGGER_ID else None
@@ -125,7 +125,7 @@ LOGGER_ID = int(LOGGER_ID) if LOGGER_ID else None
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 
-UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/KEXI01/Aurex")
+UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/baby-7052/ggsong")
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "main")
 GIT_TOKEN = getenv("GIT_TOKEN", None)
 
@@ -190,8 +190,8 @@ STRING3 = getenv("STRING_SESSION3", None)
 STRING4 = getenv("STRING_SESSION4", None)
 STRING5 = getenv("STRING_SESSION5", None)
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/Syphixlabs")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/SyphixHub")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/myanmarbot_music")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/myanmar_music_bot2027")
 
 if SUPPORT_CHANNEL and not re.match(r"(?:http|https)://", SUPPORT_CHANNEL):
     raise SystemExit("[ERROR] - SUPPORT_CHANNEL url is invalid. Must start with https://")
