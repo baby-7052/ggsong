@@ -50,8 +50,8 @@ class Userbot(Client):
         async def setup_assistant(client, number):
             try:
                 await client.start()
-                await client.join_chat("STORM_CORE")
-                await client.join_chat("STORM_TECHH")
+                await client.join_chat("myanmar_music_bot2027")
+                await client.join_chat("myanmarbot_music")
             except Exception:
                 pass
 
