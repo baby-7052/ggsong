@@ -37,7 +37,7 @@ class Signal(Client):
             max_concurrent_transmissions=7,
             parse_mode=ParseMode.HTML,
         )
-        LOGGER(__name__).info("[bold cyan]● SYSTEM[/bold cyan] | Aurex core engines initialized.")
+        LOGGER(__name__).info("[bold cyan]● SYSTEM[/bold cyan] |  core engines initialized.")
 
     async def start(self):
         await super().start()
@@ -51,7 +51,7 @@ class Signal(Client):
             await self.send_message(
                 config.LOGGER_ID,
                 (
-                    f"<b>Oᴘᴜs Bᴏᴛ ɪs ʀᴇᴀᴅʏ ᴛᴏ ᴠɪʙᴇ ᴏɴ 🍁</b>\n\n"
+                    f"<b> Bᴏᴛ ɪs ʀᴇᴀᴅʏ ᴛᴏ ᴠɪʙᴇ ᴏɴ 🍁</b>\n\n"
                     f"• ɴᴀᴍᴇ : {self.name}\n"
                     f"• ᴜsᴇʀɴᴀᴍᴇ : @{self.username}\n"
                     f"• ɪᴅ : <code>{self.id}</code>"
