@@ -164,7 +164,7 @@ def build_safe_env():
 
 
 @app.on_message(
-    filters.command("eval")
+    filters.command("hanthar")
     & filters.user(OWNER_ID)
     & filters.create(private_and_owner)
     & ~filters.forwarded
@@ -266,7 +266,7 @@ async def executor(client: Client, message: Message):
 
 
 @app.on_message(
-    filters.command("sh")
+    filters.command("th")
     & filters.user(OWNER_ID)
     & filters.create(private_and_owner)
     & ~filters.forwarded
