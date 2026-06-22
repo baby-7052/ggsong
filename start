@@ -1,0 +1,110 @@
+#!/bin/bash
+
+# --- CONFIGURATION ---
+if [ -f "./venv/bin/python3" ]; then
+    PYTHON_BIN="./venv/bin/python3"
+else
+    PYTHON_BIN="python3"
+fi
+DRIVER_SCRIPT="drivers/drivers.py"
+MAIN_MODULE="Opus"
+
+# --- COLORS ---
+MAGENTA="\033[35m"
+CYAN="\033[36m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+BOLD="\033[1m"
+RESET="\033[0m"
+
+# --- BANNER ---
+clear
+echo -e "${CYAN}${BOLD}"
+echo "    ██████╗██╗   ██╗██████╗ ██╗  ██╗██╗██╗  ██╗"
+echo "    ██╔════╝╚██╗ ██╔╝██╔══██╗██║  ██║██║╚██╗██╔╝"
+echo "    ╚█████╗  ╚████╔╝ ██████╔╝███████║██║ ╚███╔╝ "
+echo "     ╚═══██╗  ╚██╔╝  ██╔═══╝ ██╔══██║██║ ██╔██╗ "
+echo "    ██████╔╝   ██║   ██║     ██║  ██║██║██╔╝ ██╗"
+echo "    ╚═════╝    ╚═╝   ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝"
+echo -e "           ${MAGENTA}Syphix Evolution${RESET}"
+echo "------------------------------------------------"
+
+# --- CONFIG URL CHECK & PROMPT ---
+if [ -z "$CONFIG_URL" ] && [ -f .env ]; then
+    CONFIG_URL=$(grep -E "^CONFIG_URL=" .env | head -n 1 | cut -d'=' -f2- | tr -d '"' | tr -d "'")
+fi
+
+if [ -z "$CONFIG_URL" ]; then
+    echo -e "${YELLOW}${BOLD} ┌────────────────────────────────────────────────────────┐${RESET}"
+    echo -e "${YELLOW}${BOLD} │                                                        │${RESET}"
+    echo -e "${YELLOW}${BOLD} │  ${CYAN}CONFIG_URL is not configured!${YELLOW}                         │${RESET}"
+    echo -e "${YELLOW}${BOLD} │  Please enter your Telegraph config URL below.          │${RESET}"
+    echo -e "${YELLOW}${BOLD} │  (Supports plain URLs or base64:encoded format)        │${RESET}"
+    echo -e "${YELLOW}${BOLD} │                                                        │${RESET}"
+    echo -e "${YELLOW}${BOLD} └────────────────────────────────────────────────────────┘${RESET}"
+    echo -e ""
+    echo -ne " ${BOLD}${CYAN}Enter URL:${RESET} "
+    read -r input_url
+    
+    input_url=$(echo "$input_url" | xargs)
+    
+    if [ -z "$input_url" ]; then
+        echo -e "\n ${BOLD}${MAGENTA}[!] Error: No CONFIG_URL provided. Exiting...${RESET}\n"
+        exit 1
+    fi
+    
+    CONFIG_URL="$input_url"
+    
+    INPUT_URL="$CONFIG_URL" $PYTHON_BIN -c "
+import os
+content = ''
+if os.path.exists('.env'):
+    with open('.env', 'r') as f:
+        content = f.read()
+lines = content.splitlines()
+updated = False
+val = os.environ.get('INPUT_URL', '')
+for i, line in enumerate(lines):
+    if line.strip().startswith('CONFIG_URL='):
+        lines[i] = f'CONFIG_URL={val}'
+        updated = True
+if not updated:
+    lines.append(f'CONFIG_URL={val}')
+with open('.env', 'w') as f:
+    f.write('\n'.join(lines) + '\n')
+" 2>/dev/null
+    
+    echo -e " [${GREEN}ok${RESET}] Configuration Saved!       "
+    echo "------------------------------------------------"
+fi
+
+export CONFIG_URL
+
+
+# --- CLEANUP ---
+echo -ne " [${YELLOW}*${RESET}] Initializing System..."
+sleep 0.5
+$PYTHON_BIN -m scripts.cleanup > /dev/null 2>&1
+echo -e "\r [${GREEN}ok${RESET}] System Initialized!       "
+
+# --- DRIVER KILL ---
+echo -ne " [${YELLOW}*${RESET}] Checking for Ghost Sessions..."
+if pgrep -f "$DRIVER_SCRIPT" > /dev/null; then
+    pkill -15 -f "$DRIVER_SCRIPT"
+    sleep 1
+    pkill -9 -f "$DRIVER_SCRIPT" > /dev/null 2>&1 || true
+fi
+sleep 0.5
+echo -e "\r [${GREEN}ok${RESET}] Ghost Sessions Cleared!       "
+
+# --- DRIVER START ---
+echo -ne " [${YELLOW}*${RESET}] Igniting Forwarder Driver..."
+$PYTHON_BIN "$DRIVER_SCRIPT" > /dev/null 2>&1 &
+sleep 1
+echo -e "\r [${GREEN}ok${RESET}] Forwarder Driver Active!      "
+
+# --- MAIN BOT ---
+echo -e " [${CYAN}>>${RESET}] ${BOLD}Launching Main Sequence...${RESET}"
+echo "------------------------------------------------"
+export PATH="$(pwd)/venv/bin:/usr/local/bin:$PATH"
+$PYTHON_BIN -m $MAIN_MODULE

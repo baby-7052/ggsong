@@ -1,0 +1,90 @@
+{
+  "name": "˹Opus Music",
+  "description": "A Telegram Music Player Bot, written in modern Python with Kurigram and Py-Tgcalls v1.2.9.",
+  "logo": "https://files.catbox.moe/7udxph.jpg",
+  "keywords": [
+    "python3",
+    "telegram",
+    "bot",
+    "MusicBot",
+    "telegram-bot",
+    "kurigram",
+    "yt-dlp",
+  ],
+  "env": {
+    "API_ID": {
+      "description": "Telegram API ID, available at https://my.telegram.org. Required to connect the bot to Telegram servers.",
+      "required": true,
+      "value": ""
+    },
+    "API_HASH": {
+      "description": "Telegram API Hash, available at https://my.telegram.org. Required alongside API ID.",
+      "required": true,
+      "value": ""
+    },
+    "BOT_TOKEN": {
+      "description": "Bot Token from BotFather after creating your Telegram bot.",
+      "required": true,
+      "value": ""
+    },
+    "MONGO_DB_URI": {
+      "description": "MongoDB database connection URI, used for storing user and bot-related data. Get it from https://cloud.mongodb.com.",
+      "required": true,
+      "value": ""
+    },
+    "OWNER_ID": {
+      "description": "Your Telegram numeric user ID (use any management bot to find it). Multiple IDs can be separated by a space.",
+      "required": true,
+      "value": ""
+    },
+    "STRING_SESSION": {
+      "description": "Pyrogram v2 session string.",
+      "required": true,
+      "value": ""
+    },
+      "STRING_SESSION2": {
+      "description": "Pyrogram v2 session 2 string for ub2.",
+      "required": true,
+      "value": ""
+    },
+    "LOGGER_ID": {
+      "description": "Chat ID of your log group where the bot sends important logs.",
+      "required": true,
+      "value": ""
+    },
+    "COOKIE_URL": {
+      "description": "Direct raw link to your cookies.txt file for yt-dlp.",
+      "required": true,
+      "value": ""
+    },
+    "API_URL": {
+      "description": "(Optional) Custom API server URL.",
+      "required": false,
+      "value": ""
+    },
+    "API_KEY": {
+      "description": "(Optional) Custom API key.",
+      "required": false,
+      "value": ""
+    },
+    "HEROKU_API_KEY": {
+      "description": "Heroku API key for updater features.",
+      "required": false,
+      "value": ""
+    },
+    "HEROKU_APP_NAME": {
+      "description": "Heroku app name (required if HEROKU_API_KEY is set).",
+      "required": false,
+      "value": ""
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+    }
+  ],
+  "stack": "container"
+}
