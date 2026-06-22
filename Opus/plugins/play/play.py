@@ -43,7 +43,7 @@ from Opus.utils.security import is_malicious, report_security_breach
 from config import BANNED_USERS, lyrical, OWNER_ID
 from Opus.misc import SUDOERS
 
-sticker_id = "CAACAgUAAxkBAAIDG2i5G1-GgbejZ8QddOAp45geLzQfAALBFQACQ2zIVSOYW5wCt64ONgQ"
+sticker_id = "CAACAgUAAxkBAAIe72mqfmL7cPOdiA5TOr6Gsih09cVTAALgGQACfA2YVRl1rlBfNwT5HgQ"
 
 
 async def safe_edit_or_send(message: Message, msg_obj: Message, text: str):
